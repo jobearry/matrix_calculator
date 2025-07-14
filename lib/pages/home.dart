@@ -17,26 +17,75 @@ class _MyHomePageState extends State<MyHomePage> {
     data: [[0]]
   );
 
+  final FocusNode _bgFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _bgFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 80,
+        title: null,
+        automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Center(
-          child: Calculator(
-            width: 400 * .8,
-            height: 600 * .6,
-            matrixInfo: matrixInfo,
-            onMatrixChanged: (Matrix newMatrix) {
-              setState(() {
-                matrixInfo = newMatrix;
-              });
-            },
-          )
-        ) 
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          _bgFocusNode.requestFocus();
+        },
+        child: Focus(
+          focusNode: _bgFocusNode,
+          child: Stack(
+            children: [
+              // Main content
+              Center(
+                child: Calculator(
+                  width: 400 * .8,
+                  height: 600 * .6,
+                  matrixInfo: matrixInfo,
+                  onMatrixChanged: (Matrix newMatrix) {
+                    setState(() {
+                      matrixInfo = newMatrix;
+                    });
+                  },
+                ),
+              ),
+              // Floating modern title
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Card(
+                    elevation: 0,
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      child: Text(
+                        widget.title,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
