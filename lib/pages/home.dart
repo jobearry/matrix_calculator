@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matrix_calculator/components/calculator.dart';
+import 'package:matrix_calculator/models/matrix.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -9,35 +10,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Matrix matrixInfo = Matrix(
+    name: "Matrix", 
+    row: 1, 
+    col: 1, 
+    data: [[0]]
+  );
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Center(
-          child: calculator(400 * .8, 600 *.6)
-
+          child: Calculator(
+            width: 400 * .8,
+            height: 600 * .6,
+            matrixInfo: matrixInfo,
+            onMatrixChanged: (Matrix newMatrix) {
+              setState(() {
+                matrixInfo = newMatrix;
+              });
+            },
+          )
         ) 
       ),
-      
     );
   }
-
-  
 }
