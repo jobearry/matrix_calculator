@@ -4,22 +4,24 @@ A modern, user-friendly matrix calculator app built with Flutter. This app allow
 
 ## Features
 
-- **Dynamic Matrix Input:**
-  - Add or remove columns easily using left/right arrow buttons.
+- **Dynamic Matrix Grid Input:**
+  - Add or remove columns (left/right) and rows (up/down) using keyboard-like directional controls.
+  - Controls are arranged in an inverted T shape, similar to keyboard arrow keys.
   - Each cell is a clean, square, right-aligned numeric input field.
-  - Supports up to 4 columns per matrix row.
-  - Always at least one column present.
+  - Supports up to a 4x4 matrix (4 rows and 4 columns).
+  - Always at least one row and one column present.
 - **Modern UI:**
   - Floating, centered title with a minimal, beautiful design.
   - Responsive, focusable background.
-  - Pill-styled, compact controls for matrix manipulation.
+  - Transparent, bordered controls container for a sleek look.
+  - Pill-styled, compact, and keyboard-inspired controls for matrix manipulation.
 - **Matrix Operations:**
   - (Planned) Addition and subtraction of matrices.
 
 ## Usage
 
 1. **Input Matrix Data:**
-   - Use the left (`<`) and right (`>`) buttons to add or remove columns.
+   - Use the arrow buttons to add or remove columns (left/right) and rows (up/down).
    - Enter numbers in the matrix cells. Only numeric input is accepted.
 2. **Matrix Operations:**
    - (Coming soon) Perform addition and subtraction of matrices.

@@ -22,26 +22,59 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  List<TextEditingController> controllers = [TextEditingController()];
+  static const int maxRows = 4;
+  static const int maxCols = 4;
+  int rowCount = 1;
+  int colCount = 1;
+  List<List<TextEditingController>> controllers = [
+    [TextEditingController()]
+  ];
 
   void addInputField() {
-    if (controllers.length >= 4) return;
+    if (colCount >= maxCols) return;
     setState(() {
-      controllers.add(TextEditingController());
+      colCount++;
+      for (var row in controllers) {
+        row.add(TextEditingController());
+      }
     });
   }
 
   void removeInputField() {
-    if (controllers.length <= 1) return;
+    if (colCount <= 1) return;
     setState(() {
-      controllers.removeLast();
+      colCount--;
+      for (var row in controllers) {
+        row.removeLast();
+      }
+    });
+  }
+
+  void addRow() {
+    if (rowCount >= maxRows) return;
+    setState(() {
+      rowCount++;
+      controllers.add(List.generate(colCount, (_) => TextEditingController()));
+    });
+  }
+
+  void removeRow() {
+    if (rowCount <= 1) return;
+    setState(() {
+      rowCount--;
+      var removed = controllers.removeLast();
+      for (var c in removed) {
+        c.dispose();
+      }
     });
   }
 
   @override
   void dispose() {
-    for (var c in controllers) {
-      c.dispose();
+    for (var row in controllers) {
+      for (var c in row) {
+        c.dispose();
+      }
     }
     super.dispose();
   }
@@ -57,8 +90,10 @@ class _CalculatorState extends State<Calculator> {
         const SizedBox(height: 10),
         screenControls(
           widget.width, 60,
-          onAdd: controllers.length < 4 ? addInputField : null,
-          onRemove: controllers.length > 1 ? removeInputField : null,
+          onAdd: colCount < maxCols ? addInputField : null,
+          onRemove: colCount > 1 ? removeInputField : null,
+          onAddRow: rowCount < maxRows ? addRow : null,
+          onRemoveRow: rowCount > 1 ? removeRow : null,
         ),
       ],
     );

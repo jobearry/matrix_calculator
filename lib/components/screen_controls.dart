@@ -5,50 +5,69 @@ Widget screenControls(
   double height, {
   VoidCallback? onAdd,
   VoidCallback? onRemove,
+  VoidCallback? onAddRow,
+  VoidCallback? onRemoveRow,
 }) {
-  return Card(
-    elevation: 3,
-    shape: RoundedRectangleBorder(
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.transparent,
+      border: Border.all(color: Colors.black, width: 2),
       borderRadius: BorderRadius.circular(16),
     ),
-    color: Colors.grey[100],
     margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          ElevatedButton(
-            onPressed: onRemove,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black87,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Up button (centered)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OutlinedButton(
+              onPressed: onRemoveRow,
+              style: OutlinedButton.styleFrom(
+                shape: const CircleBorder(),
+                side: const BorderSide(color: Colors.black, width: 2),
+                padding: const EdgeInsets.all(8),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              child: const Icon(Icons.keyboard_arrow_up, color: Colors.black),
             ),
-            child: const Text("<"),
-          ),
-          const SizedBox(width: 8),
-          ElevatedButton(
-            onPressed: onAdd,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black87,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          ],
+        ),
+        // Left, Down, Right buttons (in a row)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OutlinedButton(
+              onPressed: onRemove,
+              style: OutlinedButton.styleFrom(
+                shape: const CircleBorder(),
+                side: const BorderSide(color: Colors.black, width: 2),
+                padding: const EdgeInsets.all(8),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              child: const Icon(Icons.keyboard_arrow_left, color: Colors.black),
             ),
-            child: const Text(">"),
-          ),
-        ],
-      ),
+            OutlinedButton(
+              onPressed: onAddRow,
+              style: OutlinedButton.styleFrom(
+                shape: const CircleBorder(),
+                side: const BorderSide(color: Colors.black, width: 2),
+                padding: const EdgeInsets.all(8),
+              ),
+              child: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+            ),
+            OutlinedButton(
+              onPressed: onAdd,
+              style: OutlinedButton.styleFrom(
+                shape: const CircleBorder(),
+                side: const BorderSide(color: Colors.black, width: 2),
+                padding: const EdgeInsets.all(8),
+              ),
+              child: const Icon(Icons.keyboard_arrow_right, color: Colors.black),
+            ),
+          ],
+        ),
+      ],
     ),
   );
 }

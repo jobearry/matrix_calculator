@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:matrix_calculator/components/input_field.dart';
 
 class Screen extends StatelessWidget {
-  final List<TextEditingController> controllers;
+  final List<List<TextEditingController>> controllers;
 
   const Screen({
     super.key,
@@ -17,15 +17,20 @@ class Screen extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.black, width: 2),
       ),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: controllers
-            .map((controller) => SizedBox(
-                  width: 90,
-                  child: InputField(
-                    controller: controller,
-                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  ),
+            .map((row) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: row
+                      .map((controller) => SizedBox(
+                            width: 90,
+                            child: InputField(
+                              controller: controller,
+                              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                            ),
+                          ))
+                      .toList(),
                 ))
             .toList(),
       ),
