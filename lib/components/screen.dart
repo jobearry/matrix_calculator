@@ -18,7 +18,7 @@ class Screen extends StatelessWidget {
         border: Border.all(color: Colors.black, width: 2),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: controllers
             .map((row) => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
