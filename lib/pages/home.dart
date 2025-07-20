@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matrix_calculator/components/screen.dart';
+import 'package:matrix_calculator/components/calculator.dart';
 import 'package:matrix_calculator/components/screen_controls.dart';
 import 'package:matrix_calculator/models/matrix.dart';
 
@@ -120,8 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Expanded(
                 child: Center(
-                  child: Screen(
-                    controllers: controllers,
+                  child: Calculator(
+                    width: 400 * .8,
+                    height: 60,
+                    matrixInfo: matrixInfo,
+                    onMatrixChanged: (m) {},
                   ),
                 ),
               ),
@@ -129,16 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 24.0),
-        child: screenControls(
-          400 * .8, 60,
-          onAdd: colCount < maxCols ? addInputField : null,
-          onRemove: colCount > 1 ? removeInputField : null,
-          onAddRow: rowCount < maxRows ? addRow : null,
-          onRemoveRow: rowCount > 1 ? removeRow : null,
-        ),
-      ),
+      // Removed duplicate screenControls
     );
   }
 }

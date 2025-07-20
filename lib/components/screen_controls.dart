@@ -7,6 +7,7 @@ Widget screenControls(
   VoidCallback? onRemove,
   VoidCallback? onAddRow,
   VoidCallback? onRemoveRow,
+  VoidCallback? onOperationPressed,
 }) {
   return Container(
     decoration: BoxDecoration(
@@ -26,7 +27,7 @@ Widget screenControls(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               OutlinedButton(
-                onPressed: null, // To be implemented
+                onPressed: onOperationPressed,
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
                   side: const BorderSide(color: Colors.black, width: 2),
@@ -36,7 +37,7 @@ Widget screenControls(
               ),
               SizedBox(width: 12),
               OutlinedButton(
-                onPressed: null, // To be implemented
+                onPressed: onOperationPressed,
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
                   side: const BorderSide(color: Colors.black, width: 2),
@@ -46,7 +47,7 @@ Widget screenControls(
               ),
               SizedBox(width: 12),
               OutlinedButton(
-                onPressed: null, // To be implemented
+                onPressed: onOperationPressed,
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
                   side: const BorderSide(color: Colors.black, width: 2),
@@ -56,7 +57,7 @@ Widget screenControls(
               ),
               // Divider before clear button
               SizedBox(width: 16),
-              Container(
+              SizedBox(
                 height: 32,
                 child: VerticalDivider(
                   color: Colors.black,

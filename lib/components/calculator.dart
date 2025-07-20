@@ -29,13 +29,19 @@ class _CalculatorState extends State<Calculator> {
   List<List<TextEditingController>> controllers = [
     [TextEditingController()]
   ];
+  List<List<String>> labels = [
+    ['']
+  ];
+  int focusedRow = 0;
+  int focusedCol = 0;
 
   void addInputField() {
     if (colCount >= maxCols) return;
     setState(() {
       colCount++;
-      for (var row in controllers) {
-        row.add(TextEditingController());
+      for (var i = 0; i < controllers.length; i++) {
+        controllers[i].add(TextEditingController());
+        labels[i].add('');
       }
     });
   }
@@ -44,8 +50,9 @@ class _CalculatorState extends State<Calculator> {
     if (colCount <= 1) return;
     setState(() {
       colCount--;
-      for (var row in controllers) {
-        row.removeLast();
+      for (var i = 0; i < controllers.length; i++) {
+        controllers[i].removeLast();
+        labels[i].removeLast();
       }
     });
   }
@@ -55,6 +62,7 @@ class _CalculatorState extends State<Calculator> {
     setState(() {
       rowCount++;
       controllers.add(List.generate(colCount, (_) => TextEditingController()));
+      labels.add(List.generate(colCount, (_) => ''));
     });
   }
 
@@ -65,6 +73,21 @@ class _CalculatorState extends State<Calculator> {
       var removed = controllers.removeLast();
       for (var c in removed) {
         c.dispose();
+      }
+      labels.removeLast();
+    });
+  }
+
+  void handleOperationPressed() {
+    setState(() {
+      for (int i = 0; i < controllers.length; i++) {
+        for (int j = 0; j < controllers[i].length; j++) {
+          final value = controllers[i][j].text;
+          if (value.isNotEmpty && value != '0') {
+            labels[i][j] = value;
+            controllers[i][j].text = '0';
+          }
+        }
       }
     });
   }
@@ -86,6 +109,13 @@ class _CalculatorState extends State<Calculator> {
       children: [
         Screen(
           controllers: controllers,
+          labels: labels,
+          onFieldFocus: (row, col) {
+            setState(() {
+              focusedRow = row;
+              focusedCol = col;
+            });
+          },
         ),
         const SizedBox(height: 10),
         screenControls(
@@ -94,6 +124,7 @@ class _CalculatorState extends State<Calculator> {
           onRemove: colCount > 1 ? removeInputField : null,
           onAddRow: rowCount < maxRows ? addRow : null,
           onRemoveRow: rowCount > 1 ? removeRow : null,
+          onOperationPressed: handleOperationPressed,
         ),
       ],
     );
